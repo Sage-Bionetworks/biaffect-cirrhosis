@@ -1,6 +1,7 @@
 import argparse
 import synapseclient as sc
 import synapsebridgehelpers
+import os
 
 TABLE_MAPPING = {
         "syn12279831": "syn18632066",
