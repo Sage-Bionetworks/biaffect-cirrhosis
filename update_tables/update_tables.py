@@ -12,6 +12,13 @@ TABLE_MAPPING = {
 SOURCE_PROJECT = "syn7838471"
 
 
+def get_env_var_credentials():
+    credentials = {}
+    credentials['synapseUsername'] = os.getenv('synapseUsername')
+    credentials['synapsePassword'] = os.getenv('synapsePassword')
+    return credentials
+
+
 def get_relevant_healthcodes(syn):
     relevant_healthcodes = syn.tableQuery(
             "SELECT distinct healthCode FROM syn7841519 "
@@ -40,7 +47,9 @@ def verify_no_new_table_versions(syn):
         raise sc.exceptions.SynapseHTTPError(error_message)
 
 def main():
-    syn = sc.login()
+    credentials = get_env_var_credentials()
+    syn = sc.login(credentials["synapseUsername"],
+                   credentials["synapsePassword"])
     verify_no_new_table_versions(syn)
     relevant_healthcodes = get_relevant_healthcodes(syn)
     synapsebridgehelpers.export_tables(
