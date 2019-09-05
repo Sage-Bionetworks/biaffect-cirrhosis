@@ -3,14 +3,21 @@ import synapseclient as sc
 import synapsebridgehelpers
 import os
 
-TABLE_MAPPING = {
-        "syn12279831": "syn18632066",
-        "syn17015193": "syn18632065",
-        "syn8261527": "syn18632064",
-        "syn7841519": "syn18632063",
-        "syn7860696": "syn18632062",
-        "syn7841520": "syn18632061"}
-SOURCE_PROJECT = "syn7838471"
+TABLE_MAPPINGS = {
+        "syn17013485": "syn20710066", # Engagement-v1
+        "syn16995608": "syn20710068", # PassiveDisplacement-v4
+        "syn15673384": "syn20710073", # Medication-v3
+        "syn15673383": "syn20710076", # StudyBurst-v1
+        "syn15673382": "syn20710082", # Triggers-v3
+        "syn15673381": "syn20710088", # Tapping-v4
+        "syn15673380": "syn20710096", # Symptoms-v3
+        "syn15673379": "syn20710101", # Demographics-v1
+        "syn15673377": "syn20710110", # StudyBurstReminder-v1
+        "syn15664831": "syn20710115", # Motivation-v1
+        "syn12977322": "syn20710117", # Tremor-v3
+        "syn12514611": "syn20710119", # WalkAndBalance-v1
+        "syn12492996": "syn20710121"} # Health Data Summary Table
+SOURCE_PROJECT = "syn18691015"
 
 
 def get_env_var_credentials():
@@ -22,16 +29,18 @@ def get_env_var_credentials():
 
 def get_relevant_healthcodes(syn):
     relevant_healthcodes = syn.tableQuery(
-            "SELECT distinct healthCode FROM syn7841519 "
-            "where substudyMemberships like '%Cirrhosis_pilot%'").asDataFrame()
+            "SELECT distinct healthCode FROM syn12492996 "
+            "where substudyMemberships like '%Udall-superusers%'").asDataFrame()
     relevant_healthcodes = list(relevant_healthcodes.healthCode)
     return(relevant_healthcodes)
 
 
 def verify_no_new_table_versions(syn):
     new_table_names_and_versions = [
-            "birth-gender-v5", "Diagnosis-v4", "biaffect-keyboard-v2",
-            "biaffect-appVersion-v2", "biaffect-MDQ-v2", "biaffect-KeyboardSession-v3"]
+            "Engagement-v2", "PassiveDisplacement-v5", "Medication-v4",
+            "StudyBurst-v2", "Triggers-v4", "Tapping-v5", "Symptoms-v4",
+            "Demographics-v2", "StudyBurstReminder-v2", "Motivation-v2",
+            "Tremor-v4", "WalkAndBalance-v2"]
     source_tables = syn.getChildren(SOURCE_PROJECT, includeTypes=['table'])
     source_table_names = [t['name'] for t in source_tables]
     prohibited_tables = [table_name in source_table_names
