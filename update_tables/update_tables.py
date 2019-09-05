@@ -16,7 +16,8 @@ TABLE_MAPPING = {
         "syn15664831": "syn20710115", # Motivation-v1
         "syn12977322": "syn20710117", # Tremor-v3
         "syn12514611": "syn20710119", # WalkAndBalance-v1
-        "syn12492996": "syn20710121"} # Health Data Summary Table
+        "syn12492996": "syn20710121", # Health Data Summary Table
+        "syn17022539": "syn20712220"} # PassiveGait-v1
 SOURCE_PROJECT = "syn18691015"
 
 
