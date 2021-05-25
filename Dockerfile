@@ -1,5 +1,6 @@
 FROM amancevice/pandas:0.23.4-python3
 
+ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 RUN pip install argparse \
                 synapseclient \
                 git+https://github.com/larssono/bridgeclient.git \
